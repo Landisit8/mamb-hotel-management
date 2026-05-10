@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: mamb-postgres
+    environment:
+      POSTGRES_DB: mamb_hotel_db
+      POSTGRES_USER: mamb_user
+      POSTGRES_PASSWORD: mamb_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - mamb_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mamb_postgres_data:

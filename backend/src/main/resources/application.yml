@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/mamb_hotel_db
+    username: mamb_user
+    password: mamb_pass
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: true
+
+  flyway:
+    enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
