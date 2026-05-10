@@ -20,3 +20,5 @@ Realizzare un gestionale modulare per:
 
 ## Stato
 Fase 0: impostazione repository, documentazione e architettura iniziale.
+
+prova
