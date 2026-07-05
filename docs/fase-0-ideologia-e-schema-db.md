@@ -1011,7 +1011,7 @@ Prenotazioni che non occupano disponibilità:
 - CANCELLED
 - NO_SHOW
 - CHECKED_OUT
-
+- 
 
 9. services
 
