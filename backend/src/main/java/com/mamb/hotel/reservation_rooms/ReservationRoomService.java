@@ -32,9 +32,7 @@ public class ReservationRoomService {
         return reservationRoomRepository.save(req);
     }
 
-    public ReservationRoom update(final Long id, final ReservationRoom req) {
-        ReservationRoom reservationRoom = reservationRoomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Camera prenotazione non presente"));
+    public ReservationRoom update(final ReservationRoom reservationRoom, final ReservationRoom req) {
         validateDates(req);
         reservationRoom.setStartDate(req.getStartDate());
         reservationRoom.setEndDate(req.getEndDate());

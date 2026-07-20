@@ -23,9 +23,7 @@ public class RoomBlockService {
         return roomBlockRepository.save(req);
     }
 
-    public RoomBlock update(final Long id, final RoomBlock req) {
-        RoomBlock roomBlock = roomBlockRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Blocco camera non presente"));
+    public RoomBlock update(final RoomBlock roomBlock, final RoomBlock req) {
         roomBlock.setStartDate(req.getStartDate());
         roomBlock.setEndDate(req.getEndDate());
         roomBlock.setBlockType(req.getBlockType());

@@ -21,7 +21,7 @@ public class CustomerController {
     @PostMapping(value = "/create")
     public Customer create(@Valid @RequestBody final Customer req) {
         if (req.getId() != null && customerRepository.existsById(req.getId()))
-            throw new BadRequestException("Utente gia' esistente");
+            throw new BadRequestException("Utente già esistente");
         return customerService.create(req);
     }
 

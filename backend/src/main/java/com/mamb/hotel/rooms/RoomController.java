@@ -20,16 +20,16 @@ public class RoomController {
     @PostMapping("/room-type/{roomTypeId}/create")
     public Room create(@PathVariable final Long roomTypeId, @Valid @RequestBody final Room req) {
         if (req.getId() != null && roomRepository.existsById(req.getId()))
-            throw new BadRequestException("Camera gia' esistente");
+            throw new BadRequestException("Camera già esistente");
         return roomService.create(roomTypeId, req);
     }
 
     @PostMapping("/{id}/update")
     public Room update(@PathVariable final Long id, @Valid @RequestBody Room req) {
-        roomRepository.findById(id)
+        Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Camera non presente"));
         req.setId(id);
-        return roomService.update(id, req);
+        return roomService.update(room, req);
     }
 
     @DeleteMapping("/{id}/delete")

@@ -19,7 +19,7 @@ public class RoomTypeController {
     @PostMapping(value = "/create")
     public RoomType create(@Valid @RequestBody final RoomType req) {
         if (req.getId() != null && roomTypeRepository.existsById(req.getId()))
-            throw new BadRequestException("Tipologia camera gia' esistente");
+            throw new BadRequestException("Tipologia camera già esistente");
         return roomTypeService.create(req);
     }
 

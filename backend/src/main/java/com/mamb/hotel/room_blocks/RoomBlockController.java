@@ -19,16 +19,16 @@ public class RoomBlockController {
     @PostMapping(value = "/room/{roomId}/create")
     public RoomBlock create(@PathVariable final Long roomId, @Valid @RequestBody final RoomBlock req) {
         if (req.getId() != null && roomBlockRepository.existsById(req.getId()))
-            throw new BadRequestException("Tipologia camera gia' esistente");
+            throw new BadRequestException("Tipologia camera già esistente");
         return roomBlockService.create(roomId, req);
     }
 
     @PostMapping("/{id}/update")
     public RoomBlock update(@PathVariable final Long id, @Valid @RequestBody RoomBlock req) {
-        roomBlockRepository.findById(id)
+        RoomBlock roomBlock = roomBlockRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Tipologia camera non presente"));
         req.setId(id);
-        return roomBlockService.update(id, req);
+        return roomBlockService.update(roomBlock, req);
     }
 
     @PostMapping(value = "/{id}/delete")

@@ -19,16 +19,16 @@ public class ReservationRoomController {
     @PostMapping(value = "/reservation/{reservationId}/room/{roomId}/create")
     public ReservationRoom create(@PathVariable final Long reservationId, @PathVariable final Long roomId, @Valid @RequestBody final ReservationRoom req) {
         if (req.getId() != null && reservationRoomRepository.existsById(req.getId()))
-            throw new BadRequestException("Camera prenotazione gia' esistente");
+            throw new BadRequestException("Camera prenotazione già esistente");
         return reservationRoomService.create(reservationId, roomId, req);
     }
 
     @PostMapping("/{id}/update")
     public ReservationRoom update(@PathVariable final Long id, @Valid @RequestBody ReservationRoom req) {
-        reservationRoomRepository.findById(id)
+        ReservationRoom reservationRoom = reservationRoomRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Camera prenotazione non presente"));
         req.setId(id);
-        return reservationRoomService.update(id, req);
+        return reservationRoomService.update(reservationRoom, req);
     }
 
     @PostMapping(value = "/{id}/delete")

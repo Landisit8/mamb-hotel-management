@@ -30,9 +30,7 @@ public class ReservationGuestService {
         return reservationGuestRepository.save(req);
     }
 
-    public ReservationGuest update(final Long id, final ReservationGuest req) {
-        ReservationGuest reservationGuest = reservationGuestRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ospite prenotazione non presente"));
+    public ReservationGuest update(final ReservationGuest reservationGuest, final ReservationGuest req) {
         reservationGuest.setRole(req.getRole());
         return reservationGuestRepository.save(reservationGuest);
     }

@@ -19,16 +19,16 @@ public class ReservationGuestController {
     @PostMapping(value = "/reservation/{reservationId}/customer/{customerId}/create")
     public ReservationGuest create(@PathVariable final Long reservationId, @PathVariable final Long customerId, @Valid @RequestBody final ReservationGuest req) {
         if (req.getId() != null && reservationGuestRepository.existsById(req.getId()))
-            throw new BadRequestException("Ospite prenotazione gia' esistente");
+            throw new BadRequestException("Ospite prenotazione già esistente");
         return reservationGuestService.create(reservationId, customerId, req);
     }
 
     @PostMapping("/{id}/update")
     public ReservationGuest update(@PathVariable final Long id, @Valid @RequestBody ReservationGuest req) {
-        reservationGuestRepository.findById(id)
+        ReservationGuest reservationGuest = reservationGuestRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Ospite prenotazione non presente"));
         req.setId(id);
-        return reservationGuestService.update(id, req);
+        return reservationGuestService.update(reservationGuest, req);
     }
 
     @PostMapping(value = "/{id}/delete")

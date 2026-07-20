@@ -26,9 +26,7 @@ public class ReservationService {
         return reservationRepository.save(req);
     }
 
-    public Reservation update(final Long id, final Reservation req) {
-        Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Prenotazione non presente"));
+    public Reservation update(final Reservation reservation, final Reservation req) {
         validateDates(req);
         reservation.setCode(req.getCode());
         reservation.setCheckInDate(req.getCheckInDate());

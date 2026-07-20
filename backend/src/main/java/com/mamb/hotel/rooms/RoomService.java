@@ -24,9 +24,7 @@ public class RoomService {
         return roomRepository.save(req);
     }
 
-    public Room update(final Long id, final Room req) {
-        Room room = roomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Camera non presente"));
+    public Room update(final Room room, final Room req) {
         room.setRoomNumber(req.getRoomNumber());
         room.setFloor(req.getFloor());
         room.setOperationalStatus(req.getOperationalStatus());
