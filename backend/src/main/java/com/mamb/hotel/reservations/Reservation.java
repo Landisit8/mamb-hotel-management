@@ -31,7 +31,7 @@ public class Reservation {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Reservation code is required")
+    //@NotBlank(message = "Reservation code is required")
     @Size(max = 50, message = "Reservation code must be at most 50 characters")
     @Column(name = "code", nullable = false, unique = true, length = 50)
     private String code;
