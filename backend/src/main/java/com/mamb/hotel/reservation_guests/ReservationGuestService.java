@@ -25,6 +25,16 @@ public class ReservationGuestService {
                 .orElseThrow(() -> new EntityNotFoundException("Prenotazione non presente"));
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente non presente"));
+        // Impedisce di inserire lo stesso cliente due volte nella stessa prenotazione
+        if (reservationGuestRepository.existsByReservation_IdAndCustomer_Id(reservationId, customerId)) {
+            throw new IllegalStateException("Cliente gia' presente nella prenotazione");
+        }
+        // Garantire un solo ospite principale
+        if (req.getRole() == ReservationGuestRole.PRIMARY &&
+            reservationGuestRepository.existsByReservation_IdAndRole(reservationId, ReservationGuestRole.PRIMARY)) {
+            throw new IllegalStateException("Esiste gia' un ospite principale per questa prenotazione ");
+        }
+
         req.setReservation(reservation);
         req.setCustomer(customer);
         return reservationGuestRepository.save(req);
