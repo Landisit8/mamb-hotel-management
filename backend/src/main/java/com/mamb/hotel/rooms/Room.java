@@ -84,4 +84,8 @@ public class Room {
     public void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
+
+    public Object gete() {
+        return null;
+    }
 }

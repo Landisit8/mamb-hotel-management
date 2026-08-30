@@ -1,0 +1,8 @@
+${AnsiColor.BLUE}███╗   ███╗ █████╗ ███╗   ███╗██████╗
+${AnsiColor.BRIGHT_BLUE}████╗ ████║██╔══██╗████╗ ████║██╔══██╗
+${AnsiColor.CYAN}██╔████╔██║███████║██╔████╔██║██████╔╝
+${AnsiColor.WHITE}██║╚██╔╝██║██╔══██║██║╚██╔╝██║██╔══██╗
+${AnsiColor.BRIGHT_WHITE}██║ ╚═╝ ██║██║  ██║██║ ╚═╝ ██║██████╔╝
+${AnsiColor.DEFAULT}╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝
+
+${AnsiColor.CYAN}:: MAMB Hotel Management :: ${AnsiColor.DEFAULT} (v${spring-boot.version})
