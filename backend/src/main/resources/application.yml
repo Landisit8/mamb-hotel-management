@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
   error:
     include-stacktrace: never
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/mamb_hotel_db
-    username: mamb_user
-    password: mamb_pass
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/mamb_hotel_db}
+    username: ${SPRING_DATASOURCE_USERNAME:mamb_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:mamb_pass}
 
   jpa:
     hibernate:
