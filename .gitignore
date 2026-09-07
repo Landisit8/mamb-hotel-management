@@ -1,16 +1,16 @@
-# Compiled class file
+# ===============================
+# 1. Bytecode e Log
+# ===============================
 *.class
-
-# Log file
 *.log
-
-# BlueJ files
 *.ctxt
-
-# Mobile Tools for Java (J2ME)
 .mtj.tmp/
+hs_err_pid*
+replay_pid*
 
-# Package Files #
+# ===============================
+# 2. Package e Binari Maven
+# ===============================
 *.jar
 *.war
 *.nar
@@ -18,22 +18,42 @@
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
-
-# Maven
 target/
 backend/target/
 
-# IntelliJ
+# ===============================
+# 3. File IDE e Editor (Ricorsivi)
+# ===============================
 .idea/
+**/.idea/
 *.iml
+**/*.iml
+*.iws
+*.ipr
+.vscode/
 
-# Environment
+# ===============================
+# 4. Credenziali, Segreti e Chiavi
+# ===============================
 .env
+*.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
 
-# OS
+# ===============================
+# 5. File di Sistema
+# ===============================
 .DS_Store
 Thumbs.db
+
+# ===============================
+# 6. Database Dumps e Backup
+# (NON inserire *.sql generico per non bloccare le migration Flyway!)
+# ===============================
+backups/
+database/backups/
+*.dump
+*.sql.gz
