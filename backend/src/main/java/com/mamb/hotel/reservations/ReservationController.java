@@ -43,4 +43,18 @@ public class ReservationController {
         return reservationService.list();
     }
 
+    //  [MAMB-03] endpoint della conferma e cancellazione di una prenotazione
+    @PostMapping("/{id}/confirm")
+    public Reservation confirm(@PathVariable final Long id){
+        reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Prenotazione non presente"));
+        return reservationService.confirmReservation(id);
+    }
+
+    @PostMapping("/{id}/cancel")
+    public Reservation cancel(@PathVariable final Long id){
+        reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Prenotazione non presente"));
+        return reservationService.cancelReservation(id);
+    }
 }

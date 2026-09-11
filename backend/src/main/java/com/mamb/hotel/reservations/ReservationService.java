@@ -3,8 +3,6 @@ package com.mamb.hotel.reservations;
 import com.mamb.hotel.customer.Customer;
 import com.mamb.hotel.customer.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +50,31 @@ public class ReservationService {
     public List<Reservation> list() {
         return reservationRepository.findAll();
     }
+
+    //  [MAMB-03] Macchina a stati
+    public Reservation confirmReservation(final Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+        // Solo le prenotazioni PENDING possono essere confermate
+        if (reservation.getStatus() != ReservationStatus.PENDING) {
+            throw new IllegalArgumentException("Solo le prenotazioni in stato PENDING possono essere confermate. Stato attuale: " + reservation.getStatus());
+        }
+        reservation.setStatus(ReservationStatus.CONFIRMED);
+        return reservationRepository.save(reservation);
+    }
+
+    public Reservation cancelReservation(final Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Prenotazione non presente "));
+        // Impossibile cancellare la prenotazione se il cliente ha gia' fatto il  check-in o check-out
+        if (reservation.getStatus() == ReservationStatus.CHECKED_IN || reservation.getStatus() == ReservationStatus.CHECKED_OUT) {
+            throw new IllegalArgumentException("Impossibile cancellare una prenotazione gia' iniziata o conclusa. Stato attuale: " + reservation.getStatus());
+        }
+        // le camere non vengono eliminate fisicamente, passano automaticamente tra le disponibili grazie al motore A
+        reservation.setStatus(ReservationStatus.CANCELLED);
+        return reservationRepository.save(reservation);
+    }
+    // end [MAMB-03]
 
     private void validateDates(final Reservation reservation) {
         LocalDate checkInDate = reservation.getCheckInDate();
