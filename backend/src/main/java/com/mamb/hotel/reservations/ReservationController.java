@@ -57,4 +57,26 @@ public class ReservationController {
                 .orElseThrow(() -> new NotFoundException("Prenotazione non presente"));
         return reservationService.cancelReservation(id);
     }
+
+    // [MAMB-04] checkIn, checkOUT e NoShow
+    @PostMapping("/{id}/checkIn")
+    public Reservation checkIn(@PathVariable final Long id){
+        reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Prenotazione non presente"));
+        return reservationService.checkIn(id);
+    }
+
+    @PostMapping("/{id}/checkOut")
+    public Reservation checkOut(@PathVariable final Long id){
+        reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Prenotazione non presente"));
+        return reservationService.checkOut(id);
+    }
+
+    @PostMapping("/{id}/noShow")
+    public Reservation noShow(@PathVariable final Long id){
+        reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Prenotazione non presente"));
+        return reservationService.markAsNoShow(id); 
+    }
 }

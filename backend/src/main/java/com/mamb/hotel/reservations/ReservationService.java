@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -97,4 +98,42 @@ public class ReservationService {
 
         return code;
     }
+
+    // [MAMB-04]
+    public Reservation checkIn (final Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Prenotazione non presente"));
+        // Il check-in si fa solo e solo se la prenotazione e' stata prima confermata
+        if (reservation.getStatus() != ReservationStatus.CONFIRMED) {
+            throw new IllegalArgumentException("Impossibile effettuare il check-in su una prenotazione non confermata. Stato attuale: " + reservation.getStatus());
+        }
+
+        reservation.setStatus(ReservationStatus.CHECKED_IN);
+        reservation.setActualCheckInAt(LocalDateTime.now());
+        return reservationRepository.save(reservation);
+    }
+
+    public Reservation checkOut (final Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Prenotazione non presente"));
+        if (reservation.getStatus() != ReservationStatus.CHECKED_IN) {
+            throw new IllegalArgumentException("Impossibile effettuare il check-out su una prenotazione non ancora check-in. Stato attuale: " + reservation.getStatus());
+        }
+        reservation.setStatus(ReservationStatus.CHECKED_OUT);
+        reservation.setActualCheckOutAt(LocalDateTime.now());
+        return reservationRepository.save(reservation);
+    }
+
+    public Reservation markAsNoShow(final Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Prenotazione non presente"));
+        // il cliente che non si presenta deve avere  una prenotazione confermata
+        if (reservation.getStatus() != ReservationStatus.CONFIRMED) {
+            throw new IllegalStateException("Solo le prenotazione confermate possono essere assegnate come no-show. stato attuale: " + reservation.getStatus());
+        }
+
+        reservation.setStatus(ReservationStatus.NO_SHOW);
+        return reservationRepository.save(reservation);
+    }
+    // end [MAMB-04]
 }
